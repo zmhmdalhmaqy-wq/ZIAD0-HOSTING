@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة المسؤول | DARK PRO HOST</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e0e8f5 100%);
+            min-height: 100vh;
+            color: #1a1a2e;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #6c5ce7, #a363d9);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #555;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #6c5ce7, #a363d9);
+            color: white;
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 28px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #6c5ce7;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .form-group input:focus {
+            border-color: #6c5ce7;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6c5ce7, #a363d9);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(108, 92, 231, 0.3);
+        }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .users-table th {
+            text-align: right;
+            padding: 15px;
+            background: rgba(108, 92, 231, 0.05);
+            font-weight: 700;
+            color: #6c5ce7;
+        }
+
+        .users-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .users-table tr:hover {
+            background: rgba(108, 92, 231, 0.03);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .badge-admin {
+            background: linear-gradient(135deg, #6c5ce7, #a363d9);
+            color: white;
+        }
+
+        .badge-user {
+            background: #e0e0e0;
+            color: #555;
+        }
+
+        .badge-banned {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn-icon {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-view {
+            background: rgba(108, 92, 231, 0.1);
+            color: #6c5ce7;
+        }
+
+        .btn-ban {
+            background: rgba(255, 107, 107, 0.1);
+            color: #ff6b6b;
+        }
+
+        .btn-unban {
+            background: rgba(0, 200, 100, 0.1);
+            color: #00c864;
+        }
+
+        .btn-delete {
+            background: rgba(255, 107, 107, 0.15);
+            color: #ff6b6b;
+        }
+
+        .btn-icon:hover {
+            transform: translateY(-2px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 28px;
+            padding: 30px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .files-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .files-table th, .files-table td {
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #eee;
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 30px;
+            margin-bottom: 20px;
+        }
+
+        .password-toggle {
+            cursor: pointer;
+            margin-right: 10px;
+            color: #6c5ce7;
+        }
+
+        .upload-area {
+            border: 2px dashed #6c5ce7;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(108, 92, 231, 0.05);
+        }
+
+        .upload-area:hover {
+            background: rgba(108, 92, 231, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #6c5ce7, #a363d9);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .stat-box h3 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            z-index: 1100;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .form-row { grid-template-columns: 1fr; }
+            .container { padding: 20px; }
+            .users-table { font-size: 12px; }
+            .action-buttons { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <i class="fas fa-crown"></i>
+            <span>DARK PRO HOST | لوحة المسؤول</span>
+        </div>
+        <div class="user-section">
+            <span><i class="fas fa-user-shield"></i> مرحباً، <strong id="adminName">...</strong></span>
+            <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> خروج</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('users')">👥 المستخدمين</button>
+            <button class="tab-btn" onclick="switchTab('stats')">📊 إحصائيات</button>
+        </div>
+
+        <div id="usersTab" class="tab-content active">
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-user-plus"></i>
+                    إضافة مستخدم جديد
+                </div>
+                <div id="userAlert"></div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>اسم المستخدم</label>
+                        <input type="text" id="newUsername" placeholder="اسم المستخدم">
+                    </div>
+                    <div class="form-group">
+                        <label>كلمة المرور</label>
+                        <input type="text" id="newPassword" placeholder="كلمة المرور">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>عدد السيرفرات المسموح بها</label>
+                        <input type="number" id="maxServers" value="10">
+                    </div>
+                    <div class="form-group">
+                        <label>عدد الأيام (الصلاحية)</label>
+                        <input type="number" id="expiryDays" value="365">
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="createUser()">✨ إنشاء الحساب</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-users"></i>
+                    قائمة المستخدمين
+                    <button class="btn-icon btn-view" onclick="loadUsers()" style="margin-right: auto;">🔄 تحديث</button>
+                </div>
+                <input type="text" class="search-box" id="userSearch" placeholder="🔍 بحث عن مستخدم..." onkeyup="filterUsers()">
+                <div style="overflow-x: auto;">
+                    <table class="users-table">
+                        <thead>
+                            <tr><th>المستخدم</th><th>النوع</th><th>كلمة المرور</th><th>السيرفرات</th><th>الصلاحية</th><th>تاريخ الإنشاء</th><th>الإجراءات</th></tr>
+                        </thead>
+                        <tbody id="usersList"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="statsTab" class="tab-content" style="display: none;">
+            <div class="card">
+                <div class="card-title"><i class="fas fa-chart-line"></i> إحصائيات النظام</div>
+                <div class="stats-grid">
+                    <div class="stat-box"><h3 id="totalUsers">0</h3><p>إجمالي المستخدمين</p></div>
+                    <div class="stat-box"><h3 id="totalServers">0</h3><p>إجمالي السيرفرات</p></div>
+                    <div class="stat-box"><h3 id="bannedUsers">0</h3><p>المستخدمين المحظورين</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="userFilesModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalUserName">ملفات المستخدم</h3>
+                <button class="modal-close" onclick="closeModal('userFilesModal')">✕</button>
+            </div>
+            <div class="upload-area" onclick="document.getElementById('adminFileUpload').click()">
+                <i class="fas fa-cloud-upload-alt"></i> انقر لرفع ملف
+            </div>
+            <input type="file" id="adminFileUpload" style="display: none;" onchange="uploadUserFile()">
+            <input type="text" class="search-box" id="adminFileSearch" placeholder="بحث في الملفات..." onkeyup="filterAdminFiles()">
+            <div style="overflow-x: auto;">
+                <table class="files-table">
+                    <thead><tr><th>الملف</th><th>الحجم</th><th>الإجراءات</th></tr></thead>
+                    <tbody id="adminFilesList"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="renameModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3>تعديل اسم الملف</h3>
+                <button class="modal-close" onclick="closeModal('renameModal')">✕</button>
+            </div>
+            <div class="form-group">
+                <label>الاسم الجديد</label>
+                <input type="text" id="renameNewName" placeholder="الاسم الجديد">
+            </div>
+            <button class="btn-primary" onclick="confirmRename()">تأكيد التعديل</button>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        let currentViewUser = null;
+        let currentRenameFile = null;
+        let usersData = [];
+
+        function showToast(msg, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.style.background = isError ? '#ff6b6b' : '#00c864';
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 3000);
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+            document.getElementById(tab + 'Tab').style.display = 'block';
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            if (tab === 'users') loadUsers();
+            if (tab === 'stats') loadStats();
+        }
+
+        async function loadUsers() {
+            const res = await fetch('/api/admin/users');
+            const data = await res.json();
+            if (data.success) {
+                usersData = data.users;
+                renderUsersTable(usersData);
+            }
+        }
+
+        function renderUsersTable(users) {
+            const tbody = document.getElementById('usersList');
+            tbody.innerHTML = users.map(u => `
+                <tr>
+                    <td><strong>${escapeHtml(u.username)}</strong></td>
+                    <td><span class="badge ${u.is_admin ? 'badge-admin' : (u.is_banned ? 'badge-banned' : 'badge-user')}">${u.is_admin ? '👑 مسؤول' : (u.is_banned ? '🚫 محظور' : '👤 مستخدم')}</span></td>
+                    <td>
+                        ${u.password_preview || '••••••••'}
+                        ${!u.is_admin ? `<i class="fas fa-eye password-toggle" onclick="togglePassword('${u.username}')"></i>` : ''}
+                    </td>
+                    <td>${u.max_servers || 'غير محدود'}</td>
+                    <td>${u.expiry_days || '365'} يوم</td>
+                    <td style="font-size:12px">${u.created_at ? u.created_at.substring(0,10) : 'N/A'}</td>
+                    <td class="action-buttons">
+                        <button class="btn-icon btn-view" onclick="viewUserFiles('${u.username}')"><i class="fas fa-folder-open"></i> ملفات</button>
+                        ${!u.is_admin ? `
+                            ${u.is_banned ? 
+                                `<button class="btn-icon btn-unban" onclick="toggleBan('${u.username}', false)"><i class="fas fa-check-circle"></i> فك الحظر</button>` :
+                                `<button class="btn-icon btn-ban" onclick="toggleBan('${u.username}', true)"><i class="fas fa-ban"></i> حظر</button>`
+                            }
+                            <button class="btn-icon btn-delete" onclick="deleteUser('${u.username}')"><i class="fas fa-trash"></i> حذف</button>
+                        ` : '<span style="color:#999">محمي</span>'}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        async function togglePassword(username) {
+            const res = await fetch(`/api/admin/get-password?username=${username}`);
+            const data = await res.json();
+            if (data.success) {
+                showToast(`🔑 كلمة المرور: ${data.password}`);
+            } else {
+                showToast(data.message || 'لا يمكن عرض كلمة المرور', true);
+            }
+        }
+
+        async function toggleBan(username, ban) {
+            const res = await fetch('/api/admin/toggle-ban', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username, ban})
+            });
+            const data = await res.json();
+            if (data.success) {
+                showToast(ban ? '✅ تم حظر المستخدم' : '✅ تم فك الحظر');
+                loadUsers();
+            } else {
+                showToast(data.message, true);
+            }
+        }
+
+        async function deleteUser(username) {
+            if (!confirm(`⚠️ هل أنت متأكد من حذف المستخدم "${username}"؟ لا يمكن التراجع!`)) return;
+            const res = await fetch('/api/admin/delete-user', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username})
+            });
+            const data = await res.json();
+            if (data.success) {
+                showToast('✅ تم حذف المستخدم');
+                loadUsers();
+            } else {
+                showToast('❌ ' + data.message, true);
+            }
+        }
+
+        async function createUser() {
+            const username = document.getElementById('newUsername').value.trim();
+            const password = document.getElementById('newPassword').value.trim();
+            const max_servers = parseInt(document.getElementById('maxServers').value) || 10;
+            const expiry_days = parseInt(document.getElementById('expiryDays').value) || 365;
+
+            if (!username || !password) {
+                showToast('⚠️ الرجاء إدخال اسم المستخدم وكلمة المرور', true);
+                return;
+            }
+
+            const res = await fetch('/api/admin/create-user', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username, password, max_servers, expiry_days})
+            });
+            const data = await res.json();
+            if (data.success) {
+                showToast('✅ تم إنشاء الحساب بنجاح');
+                document.getElementById('newUsername').value = '';
+                document.getElementById('newPassword').value = '';
+                loadUsers();
+            } else {
+                showToast('❌ ' + data.message, true);
+            }
+        }
+
+        async function viewUserFiles(username) {
+            currentViewUser = username;
+            document.getElementById('modalUserName').innerHTML = `<i class="fas fa-user"></i> ملفات: ${username}`;
+            document.getElementById('userFilesModal').classList.add('active');
+            await loadUserFiles(username);
+        }
+
+        async function loadUserFiles(username) {
+            const res = await fetch(`/api/admin/user-files?username=${username}`);
+            const files = await res.json();
+            renderAdminFilesTable(files);
+        }
+
+        function renderAdminFilesTable(files) {
+            const tbody = document.getElementById('adminFilesList');
+            if (!files.length) {
+                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center">📂 لا توجد ملفات</td></tr>';
+                return;
+            }
+            tbody.innerHTML = files.map(f => `
+                <tr>
+                    <td><i class="fas ${f.is_dir ? 'fa-folder' : 'fa-file'}"></i> ${escapeHtml(f.name)}</td>
+                    <td>${f.size || '--'}</td>
+                    <td class="file-actions">
+                        <button class="btn-icon btn-view" onclick="downloadUserFile('${f.name}')"><i class="fas fa-download"></i> تحميل</button>
+                        <button class="btn-icon btn-view" onclick="renameUserFile('${f.name}')"><i class="fas fa-edit"></i> تعديل الاسم</button>
+                        <button class="btn-icon btn-delete" onclick="deleteUserFile('${f.name}')"><i class="fas fa-trash"></i> حذف</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        async function uploadUserFile() {
+            const fileInput = document.getElementById('adminFileUpload');
+            const file = fileInput.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('username', currentViewUser);
+
+            const res = await fetch('/api/admin/upload-file', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await res.json();
+            if (data.success) {
+                showToast('✅ تم رفع الملف');
+                loadUserFiles(currentViewUser);
+            } else {
+                showToast('❌ فشل الرفع', true);
+            }
+            fileInput.value = '';
+        }
+
+        function downloadUserFile(filename) {
+            window.open(`/api/admin/download-file?username=${currentViewUser}&filename=${encodeURIComponent(filename)}`, '_blank');
+        }
+
+        function renameUserFile(filename) {
+            currentRenameFile = filename;
+            document.getElementById('renameNewName').value = filename;
+            document.getElementById('renameModal').classList.add('active');
+        }
+
+        async function confirmRename() {
+            const newName = document.getElementById('renameNewName').value.trim();
+            if (!newName) return;
+
+            const res = await fetch('/api/admin/rename-file', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    username: currentViewUser,
+                    old_name: currentRenameFile,
+                    new_name: newName
+                })
+            });
+            const data = await res.json();
+            if (data.success) {
+                showToast('✅ تم تعديل الاسم');
+                closeModal('renameModal');
+                loadUserFiles(currentViewUser);
+            } else {
+                showToast('❌ ' + data.message, true);
+            }
+        }
+
+        async function deleteUserFile(filename) {
+            if (!confirm(`⚠️ حذف ملف "${filename}"؟`)) return;
+            const res = await fetch('/api/admin/delete-file', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    username: currentViewUser,
+                    filename: filename
+                })
+            });
+            const data = await res.json();
+            if (data.success) {
+                showToast('✅ تم حذف الملف');
+                loadUserFiles(currentViewUser);
+            } else {
+                showToast('❌ فشل الحذف', true);
+            }
+        }
+
+        async function loadStats() {
+            const res = await fetch('/api/admin/stats');
+            const data = await res.json();
+            if (data.success) {
+                document.getElementById('totalUsers').innerText = data.total_users;
+                document.getElementById('totalServers').innerText = data.total_servers;
+                document.getElementById('bannedUsers').innerText = data.banned_users;
+            }
+        }
+
+        function filterUsers() {
+            const search = document.getElementById('userSearch').value.toLowerCase();
+            const filtered = usersData.filter(u => u.username.toLowerCase().includes(search));
+            renderUsersTable(filtered);
+        }
+
+        function filterAdminFiles() {
+            const search = document.getElementById('adminFileSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('#adminFilesList tr');
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                row.style.display = text.includes(search) ? '' : 'none';
+            });
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function escapeHtml(str) {
+            return String(str).replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        async function logout() {
+            await fetch('/api/logout', {method: 'POST'});
+            window.location.href = '/login';
+        }
+
+        // تحميل اسم المسؤول
+        async function loadAdminName() {
+            const res = await fetch('/api/current_user');
+            const data = await res.json();
+            if (data.success && data.username) {
+                document.getElementById('adminName').innerText = data.username;
+            }
+        }
+
+        loadAdminName();
+        loadUsers();
+
+        window.onclick = function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
